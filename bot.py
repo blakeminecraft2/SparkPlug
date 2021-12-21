@@ -53,3 +53,5 @@ class SparkPlug(commands.AutoShardedBot):
 
     async def on_ready(self):
         print(f"Bot is online - logged in as {self.user}")
+        await self.change_presence(activity=discord.activity.Game(name="Development"))
+        print("Presence changed.")
