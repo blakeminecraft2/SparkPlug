@@ -2,9 +2,9 @@ import discord
 from time import time
 import platform
 from typing import Union, Optional
+from lib.views import Invite
 from datetime import datetime
 from discord.ext import commands 
-from discord.ui import Button, View, Select, view
 
 class Utils(commands.Cog):
 
@@ -14,6 +14,7 @@ class Utils(commands.Cog):
 
     @commands.command(name="ping", brief="Ping the bot", description="Get the bot's latency values (websocket and REST)")
     async def ping(self, ctx):
+
         api_start = time()
         msg = await ctx.send("Ping...")
         api_end = time()
@@ -31,7 +32,9 @@ class Utils(commands.Cog):
         em.add_field(name="Bot version", value=self.bot.__version__, inline=True)
         em.add_field(name="Python version", value=platform.python_version(), inline=True)
         em.add_field(name="Discord.py version", value=discord.__version__, inline=True)
-        await ctx.send(embed=em)
+        
+        # sorting this out soon
+        await ctx.send(embed=em, view=Invite(ctx)) 
 
     @commands.command(name="userinfo", aliases=["whois", "uinfo", "user"], brief="Get information on a user")
     async def userinfo(self, ctx:commands.Context, member:discord.Member=None):

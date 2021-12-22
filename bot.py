@@ -34,13 +34,8 @@ class SparkPlug(commands.AutoShardedBot):
     def load_extensions(self):
         for extension in Path(r"cogs").glob("**/*.py"):
             extension = str(extension).replace("\\", ".")[:-3]
-            try:
-                self.load_extension(extension)
-            except Exception as e:
-                print(f"Couldn't load extension {extension}\n-> {type(e).__name__}: {e}")
-            else:
-                print(f"Extension {extension} loaded")
-
+            self.load_extension(extension)
+            
     def run(self, token: str = None):
         self.httpsession = aiohttp.ClientSession()
         self.load_extensions()
