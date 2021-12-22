@@ -1,6 +1,8 @@
+from datetime import time, timedelta
 import discord
 from typing import Optional, Union
 from discord.ext import commands
+from discord.utils import utcnow
 
 
 class Moderation(commands.Cog):
@@ -39,6 +41,12 @@ class Moderation(commands.Cog):
                 member = await self.bot.fetch_user(int(member))
                 await ctx.guild.ban(member,reason=reason)
             await ctx.send(f":hammer: Banned user {member}")
+
+    @commands.command(name="mute",brief="mute (timeout) a member")
+    @commands.has_permissions(manage_guild=True)
+    async def mute(self,ctx,member:discord.Member, seconds:int=60):
+        await member.edit(timeout_until=utcnow() + timedelta(seconds=seconds))
+        await ctx.send(f"Ok, muted {member} for {seconds} seconds")
             
 def setup(bot):
     bot.add_cog(Moderation(bot))
