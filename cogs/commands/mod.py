@@ -45,8 +45,13 @@ class Moderation(commands.Cog):
     @commands.command(name="mute",brief="mute (timeout) a member")
     @commands.has_permissions(manage_guild=True)
     async def mute(self,ctx,member:discord.Member, seconds:int=60):
-        await member.edit(timeout_until=utcnow() + timedelta(seconds=seconds))
-        await ctx.send(f"Ok, muted {member} for {seconds} seconds")
+        amt = utcnow() + timedelta(seconds=seconds)
+        await member.edit(timeout_until=amt)
+        em = discord.Embed(title="Timeout")
+        em.add_field(name="user effected", value=member.mention, inline=False)
+        em.add_field(name="length", value=seconds)
+        em.add_field(name="executed by", value=ctx.author.mention, inline=False)
+        await ctx.send(embed=em)
             
 def setup(bot):
     bot.add_cog(Moderation(bot))

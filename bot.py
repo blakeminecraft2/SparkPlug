@@ -35,16 +35,16 @@ class SparkPlug(commands.AutoShardedBot):
         for extension in Path(r"cogs").glob("**/*.py"):
             extension = str(extension).replace("\\", ".")[:-3]
             self.load_extension(extension)
+            print(f"loaded extension {extension}")
             
     def run(self, token: str = None):
-        self.httpsession = aiohttp.ClientSession()
         self.load_extensions()
+        self.httpsession = aiohttp.ClientSession()
         super().run(token)
         
     async def close(self):
         await self.httpsession.close()
         await super().close()
-
 
     async def on_ready(self):
         print(f"Bot is online - logged in as {self.user}")

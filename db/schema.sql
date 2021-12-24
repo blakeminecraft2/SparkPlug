@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS custom_prefixes(
+    guild_id INTEGER NOT NULL PRIMARY KEY,
+    prefix VARCHAR(8) NOT NULL
+)
+
+CREATE TABLE IF NOT EXISTS economy(
+    wallet INTEGER NOT NULL,
+    bank INTEGER NOT NULL,
+    user_id INTEGER NOT NULL
+)
