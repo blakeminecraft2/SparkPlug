@@ -88,17 +88,20 @@ class Economy(commands.Cog):
         await ctx.send("done")
 
     @commands.command(name="steal")
-    async def steal(self, ctx, user: discord.Member, amount: int):
+    async def steal(self, ctx: commands.Context, user: discord.Member, amount: int):
         await functions.open_account(ctx.author)
 
         data = await functions.get_info(user)
+        userdata = await functions.get_info(ctx.author)
 
         if data[0] <= amount:
             await ctx.send("user is too poor :sad:")
             return
 
-        await functions.update_wallet(ctx.author, data[0] + amount)
-        await functions.update_bank(user, data[0] - amount)
+        await functions.update_wallet(ctx.author, userdata[0] + amount)
+
+        await functions.update_wallet(user, data[0] - amount)
+
         await ctx.send("stolen!")
 
     
