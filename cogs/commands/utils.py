@@ -1,10 +1,19 @@
 import discord
 from time import time
 import platform
-from typing import Union, Optional
+from typing import IO, Union, Optional
+
+from discord.ext.commands.help import Paginator
 from lib.views import Invite
 from datetime import datetime
+import textwrap
+import contextlib
 from discord.ext import commands 
+import io
+
+def clean_code(content):
+    if content.startswith("```") and content.endswith("```"):
+        return "\n".join(content.split("\n")[1:][:-3])
 
 class Utils(commands.Cog):
 
@@ -48,6 +57,6 @@ class Utils(commands.Cog):
         em.add_field(name="bot", value=member.bot)
         em.add_field(name="top role", value=member.top_role)
         await ctx.send(embed=em)
-        
+
 def setup(bot):
     bot.add_cog(Utils(bot))

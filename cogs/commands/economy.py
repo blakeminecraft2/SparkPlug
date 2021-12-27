@@ -46,7 +46,7 @@ class Economy(commands.Cog):
     @commands.group(name="bank", brief="Bank management", invoke_without_command=True)
     async def bank(self, ctx):
         await functions.open_account(ctx.author)
-        await ctx.send("commands: balance")
+        await ctx.send("commands: balance, deposit, withdraw")
 
     @bank.command(name="balance", aliases=["bal"], brief="check your balance")
     async def balance(self,ctx,member:discord.Member = None):
