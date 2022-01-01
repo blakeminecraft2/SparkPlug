@@ -1,3 +1,4 @@
+from logging import NullHandler
 import discord
 from time import time
 import platform
@@ -51,11 +52,22 @@ class Utils(commands.Cog):
             member = ctx.author
         em = discord.Embed(title="UserInfo", color=ctx.author.color,description=member.nick , timestamp=datetime.utcnow())
         em.set_thumbnail(url=member.avatar.url)
+        if not member.banner is None:
+            em.set_image(url=member.banner.url)
         em.add_field(name="username", value=member)
         em.add_field(name="ID", value=member.id)
         em.add_field(name="nitro since", value=member.premium_since)
         em.add_field(name="bot", value=member.bot)
         em.add_field(name="top role", value=member.top_role)
+        await ctx.send(embed=em)
+
+    @commands.command(name="serverinfo")
+    async def serverinfo(self, ctx: commands.Context):
+        em = discord.Embed(title="Server info", color=ctx.author.color)
+        em.set_thumbnail(url=ctx.guild.icon.url)
+        em.add_field(name="name", value=ctx.guild.name)
+        em.add_field(name="nitro boosts", value=str(ctx.guild.premium_subscription_count))
+        em.add_field(name="boost tier", value=str(ctx.guild.premium_tier))
         await ctx.send(embed=em)
 
 def setup(bot):

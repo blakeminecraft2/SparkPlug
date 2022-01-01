@@ -21,7 +21,7 @@ class Moderation(commands.Cog):
     async def kick(self, ctx, members: commands.Greedy[discord.Member], *, reason: Optional[str] = commands.Option(description="Why are you kicking these members?", default="No reason provided")):
        for member in members:
             try:
-                member.send(f"You have been kicked from {ctx.guild}\nReason: {reason}")
+                await member.send(f"You have been kicked from {ctx.guild}\nReason: {reason}")
             except discord.errors.Forbidden:
                 await ctx.send(f"I could not DM {member}")
             await member.kick(reason=reason)
@@ -33,7 +33,7 @@ class Moderation(commands.Cog):
        for member in members:
             if isinstance(member,discord.Member):
                 try:
-                    member.send(f"You have been banned from {ctx.guild}\nReason: {reason}")
+                    await member.send(f"You have been banned from {ctx.guild}\nReason: {reason}")
                 except discord.errors.Forbidden:
                     await ctx.send(f"I could not DM {member}")
                 await member.ban(reason=reason, delete_message_days=delete_message_days)
