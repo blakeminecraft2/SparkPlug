@@ -1,8 +1,10 @@
+from logging import fatal
 import os
 from os import getenv
 from pathlib import Path
 import aiosqlite
 import aiohttp
+from lib.help import SparkHelp
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
@@ -24,8 +26,9 @@ class SparkPlug(commands.AutoShardedBot):
         super().__init__(
             command_prefix=commands.when_mentioned_or(self.DEFAULT_PREFIX),
             slash_commands=True,
-            case_insensitive=True,
+            case_insensitive=False,
             intents=discord.Intents().all(),
+            help_command=SparkHelp(),
             allowed_mentions=discord.AllowedMentions(
                 users=True, replied_user=True, roles=False, everyone=False
             ),

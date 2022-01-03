@@ -42,6 +42,7 @@ class Economy(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
+        self.emoji = "<:cash:927276284780892161>"
 
     @commands.group(name="bank", brief="Bank management", invoke_without_command=True)
     async def bank(self, ctx):

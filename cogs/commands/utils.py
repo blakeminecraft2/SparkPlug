@@ -3,6 +3,7 @@ import discord
 from time import time
 import platform
 from typing import IO, Union, Optional
+from discord.ext.commands import context
 
 from discord.ext.commands.help import Paginator
 from lib.views import Invite
@@ -18,8 +19,9 @@ def clean_code(content):
 
 class Utils(commands.Cog):
 
-    def __init__(self, bot):
+    def __init__(self, bot: commands.Bot):
         self.bot = bot
+        self.emoji = "<:tools:927276285015773244>"
 
 
     @commands.command(name="ping", brief="Ping the bot", description="Get the bot's latency values (websocket and REST)")
@@ -37,13 +39,16 @@ class Utils(commands.Cog):
 
 
     @commands.command(name="about", aliases=["version", "info"], brief="Get version info about the bot")
-    async def about(self, ctx):
+    async def about(self, ctx: commands.Context):
         em = discord.Embed(title="About", color=ctx.guild.me.color, timestamp=datetime.utcnow())
         em.add_field(name="Bot version", value=self.bot.__version__, inline=True)
         em.add_field(name="Python version", value=platform.python_version(), inline=True)
         em.add_field(name="Discord.py version", value=discord.__version__, inline=True)
-        
-        # sorting this out soon
+        em.add_field(name="Commands",value=len(self.bot.commands) , inline=True)
+        em.add_field(name="Guilds",value=len(self.bot.guilds) , inline=True)
+        em.add_field(name="Shard",value=str(ctx.guild.shard_id) , inline=True)
+
+
         await ctx.send(embed=em, view=Invite(ctx)) 
 
     @commands.command(name="userinfo", aliases=["whois", "uinfo", "user"], brief="Get information on a user")
@@ -59,6 +64,7 @@ class Utils(commands.Cog):
         em.add_field(name="nitro since", value=member.premium_since)
         em.add_field(name="bot", value=member.bot)
         em.add_field(name="top role", value=member.top_role)
+        em.add_field(name="status", value=member.status)
         await ctx.send(embed=em)
 
     @commands.command(name="serverinfo")

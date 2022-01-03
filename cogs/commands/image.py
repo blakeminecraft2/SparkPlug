@@ -5,6 +5,7 @@ from discord.ext import commands
 class Image(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.emoji = "<:image:927276284999008276>"
 
     @commands.command()
     async def cat(self, ctx: commands.Context) -> discord.Message:
@@ -33,7 +34,7 @@ class Image(commands.Cog):
             img = await session.get('https://api.waifu.im/sfw/maid/')
             image = await img.json()
 
-        embed = discord.Embed(title="Anime", color=ctx.author.color)
+        embed = discord.Embed(title="Maid", color=ctx.author.color)
         embed.set_image(url=image['images'][0]['url'])
         await ctx.send(embed=embed)
 

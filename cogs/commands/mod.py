@@ -9,6 +9,7 @@ class Moderation(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
+        self.emoji = "<:gavel:927276284592144425>"
     
     @commands.command(name="slowmode")
     @commands.has_permissions(manage_channels=True)
