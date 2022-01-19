@@ -1,4 +1,5 @@
 from logging import NullHandler
+import aiohttp
 import discord
 from time import time
 import platform
@@ -76,5 +77,23 @@ class Utils(commands.Cog):
         em.add_field(name="boost tier", value=str(ctx.guild.premium_tier))
         await ctx.send(embed=em)
 
+    @commands.command()
+    async def mcuser(self, ctx: commands.Context, user: str) -> discord.Message:
+        async with aiohttp.ClientSession() as session:
+            data = await session.get(f'https://some-random-api.ml/mc?username={user}')
+            data = await data.json()
+            
+        for dct in data["name_history"]:
+            correct_date = dct["changedToAt"].split("/")
+            correct_date[0] = correct_date[0].replace("0", "1")
+            dct["changedToAt"] = "/".join(correct_date)
+
+        embed = discord.Embed(title="MC User", color=ctx.author.color)
+        embed.add_field(name="Username", value=data["username"])
+        embed.add_field(name="UUID", value=data["uuid"])
+        embed.add_field(name="Name History", value="\n".join([f"{user['name']} - {user['changedToAt']}" for user in data["name_history"]]))
+        await ctx.send(embed=embed)
+
+#SparkPlug was here
 def setup(bot):
     bot.add_cog(Utils(bot))
