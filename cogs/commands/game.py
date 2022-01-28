@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+from lib.views import RPS
 
 class Games(commands.Cog):
 
@@ -11,6 +12,11 @@ class Games(commands.Cog):
     @commands.command(slash_command=False)
     async def gametest(self,ctx):
         await ctx.send("Test done")
+
+    @commands.command()
+    async def rps(self,ctx):
+        msg = await ctx.send("RPS!")
+        await msg.edit("RPS!", view=RPS(ctx, msg))
 
 def setup(bot):
     bot.add_cog(Games(bot))

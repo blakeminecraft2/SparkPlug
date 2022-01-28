@@ -89,7 +89,6 @@ class Moderation(commands.Cog):
     async def warnings(self, ctx, member: discord.Member):
         await open(member)
         data = await getdata(member)
-
         await ctx.send(f"user has {data[2]} warnings")
 
     @commands.command()
