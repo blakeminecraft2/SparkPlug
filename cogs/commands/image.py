@@ -39,7 +39,7 @@ class Image(commands.Cog):
 
     @commands.group()
     async def anime(self, ctx: commands.Context):
-        await ctx.send("Entering the anime zone")
+        return
 
     @anime.command()
     async def maid(self, ctx: commands.Context) -> discord.Message:

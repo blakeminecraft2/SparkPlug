@@ -5,7 +5,7 @@ from time import time
 import platform
 from typing import IO, Union, Optional
 from discord.ext.commands import context
-
+from pathlib import Path
 from discord.ext.commands.help import Paginator
 from lib.views import Invite
 from datetime import datetime
@@ -93,6 +93,14 @@ class Utils(commands.Cog):
         embed.add_field(name="UUID", value=data["uuid"])
         embed.add_field(name="Name History", value="\n".join([f"{user['name']} - {user['changedToAt']}" for user in data["name_history"]]))
         await ctx.send(embed=embed)
+
+    @commands.is_owner()
+    @commands.command(slash_command=False)
+    async def loadsecrets(self, ctx):
+        for extension in Path(r"secretcogs").glob("**/*.py"):
+            extension = str(extension).replace("\\", ".")[:-3]
+            self.bot.load_extension(extension)
+        await ctx.send("👀 yes sir")
 
 #SparkPlug was here
 def setup(bot):

@@ -15,6 +15,14 @@ class Fun(commands.Cog):
         em = discord.Embed(title="Coolness meter :thermometer:", color=member.color, description=f"{member.display_name} is {randrange(0,100)}% cool!")
         await ctx.send(embed=em)
 
+    @commands.command(aliases=["ship"])
+    async def love(self,ctx: commands.Context,member: discord.Member = None):
+        if member == None:
+            member = ctx.author
+        
+        em = discord.Embed(title="Love meter ❤️", color=member.color, description=f"{ctx.author.display_name}❤️ {randrange(0,100)}% ❤️{member.display_name}")
+        await ctx.send(embed=em)
+
     @commands.command()
     async def ratio(self,ctx: commands.Context):
         msg = await ctx.send("Ratio!")
