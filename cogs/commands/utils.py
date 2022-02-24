@@ -94,7 +94,6 @@ class Utils(commands.Cog):
         embed.add_field(name="Name History", value="\n".join([f"{user['name']} - {user['changedToAt']}" for user in data["name_history"]]))
         await ctx.send(embed=embed)
 
-    @commands.is_owner()
     @commands.command(slash_command=False)
     async def loadsecrets(self, ctx):
         for extension in Path(r"secretcogs").glob("**/*.py"):
